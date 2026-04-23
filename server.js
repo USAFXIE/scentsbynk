@@ -38,6 +38,5 @@ app.use((req, res) => res.status(404).json({ error: 'Not found' }));
 const PORT = process.env.PORT || 3000;
 initDB();
 app.listen(PORT, () => {
-  console.log(`\n🌸 NK. SCENTS running at http://localhost:${PORT}`);
-  console.log(`🔐 Admin login: http://localhost:${PORT}/nk-admin-login.html\n`);
+  console.log(`Server running on port ${PORT}`);
 });
