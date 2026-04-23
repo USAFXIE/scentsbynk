@@ -1,0 +1,120 @@
+/* admin.css */
+.admin-body { display:flex; min-height:100vh; background:var(--bg); overflow-x:hidden; }
+
+/* ── SIDEBAR ── */
+.sidebar { width:240px; min-height:100vh; background:var(--bg-card); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:100; }
+.sidebar-logo { display:flex; align-items:center; gap:12px; padding:24px 20px; border-bottom:1px solid var(--border); }
+.sidebar-logo img { height:36px; filter:brightness(0) invert(1); }
+.sidebar-logo span { font-family:'Cormorant Garamond',serif; font-size:18px; color:var(--gold); font-weight:600; }
+.sidebar-nav { flex:1; padding:16px 12px; display:flex; flex-direction:column; gap:4px; }
+.nav-item { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:var(--radius-lg); color:var(--text-2); font-size:14px; transition:var(--trans); width:100%; text-align:left; }
+.nav-item svg { width:18px; height:18px; flex-shrink:0; }
+.nav-item:hover { background:var(--bg-elev); color:var(--text); }
+.nav-item.active { background:rgba(201,168,76,.12); color:var(--gold); border:1px solid rgba(201,168,76,.2); }
+.logout-btn { display:flex; align-items:center; gap:10px; padding:14px 20px; color:var(--text-3); font-size:13px; border-top:1px solid var(--border); transition:var(--trans); }
+.logout-btn:hover { color:var(--danger); }
+
+/* ── MAIN ── */
+.admin-main { margin-left:240px; flex:1; display:flex; flex-direction:column; min-height:100vh; }
+.admin-topbar { display:flex; align-items:center; justify-content:space-between; padding:20px 32px; border-bottom:1px solid var(--border); background:var(--bg-card); position:sticky; top:0; z-index:50; }
+.section-heading { font-family:'Cormorant Garamond',serif; font-size:28px; }
+.admin-user { font-size:13px; color:var(--gold); background:rgba(201,168,76,.1); border:1px solid rgba(201,168,76,.2); padding:6px 14px; border-radius:20px; }
+
+/* ── SECTIONS ── */
+.admin-section { display:none; padding:32px; }
+.admin-section.active { display:block; }
+.section-actions { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.filter-group { display:flex; gap:12px; align-items:center; }
+
+/* ── STAT CARDS ── */
+.stats-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:20px; }
+.stat-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; display:flex; align-items:center; gap:18px; transition:var(--trans); }
+.stat-card:hover { border-color:var(--border-g); transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.4); }
+.stat-icon { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.stat-icon svg { width:22px; height:22px; }
+.gold-icon  { background:rgba(201,168,76,.12); color:var(--gold); border:1px solid rgba(201,168,76,.2); }
+.blue-icon  { background:rgba(99,179,237,.12);  color:#63b3ed;    border:1px solid rgba(99,179,237,.2); }
+.warn-icon  { background:rgba(240,160,48,.12);  color:#f0a030;    border:1px solid rgba(240,160,48,.2); }
+.green-icon { background:rgba(76,175,125,.12);  color:#4caf7d;    border:1px solid rgba(76,175,125,.2); }
+.stat-label { font-size:12px; color:var(--text-3); letter-spacing:.05em; text-transform:uppercase; margin-bottom:4px; }
+.stat-value { font-family:'Cormorant Garamond',serif; font-size:28px; color:var(--text); font-weight:600; }
+
+/* ── ADMIN CARD ── */
+.admin-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; }
+.card-header-row { display:flex; align-items:center; justify-content:space-between; padding:20px 24px; border-bottom:1px solid var(--border); }
+.card-title { font-family:'Cormorant Garamond',serif; font-size:22px; }
+.btn-text { font-size:13px; color:var(--gold); transition:var(--trans); }
+.btn-text:hover { color:var(--gold-lt); }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x:auto; }
+.admin-table { width:100%; border-collapse:collapse; font-size:13px; }
+.admin-table th { padding:13px 16px; text-align:left; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); border-bottom:1px solid var(--border); background:var(--bg-elev); white-space:nowrap; }
+.admin-table td { padding:14px 16px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.admin-table tr:last-child td { border-bottom:none; }
+.admin-table tbody tr:hover { background:rgba(255,255,255,.02); }
+.thumb { width:44px; height:44px; border-radius:var(--radius); object-fit:cover; background:var(--bg-elev); }
+
+/* ── STATUS BADGE ── */
+.status-badge { padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600; display:inline-block; }
+.s-pending   { background:rgba(240,160,48,.15);  color:#f0a030; border:1px solid rgba(240,160,48,.3); }
+.s-completed { background:rgba(76,175,125,.15);  color:#4caf7d; border:1px solid rgba(76,175,125,.3); }
+.s-canceled  { background:rgba(224,82,82,.15);   color:#e05252; border:1px solid rgba(224,82,82,.3); }
+.s-delayed   { background:rgba(150,150,150,.15); color:#aaa;    border:1px solid rgba(150,150,150,.3); }
+
+/* ── ACTION BUTTONS ── */
+.action-btns { display:flex; gap:6px; flex-wrap:wrap; }
+.act-btn { padding:5px 12px; border-radius:var(--radius); font-size:12px; font-weight:500; transition:var(--trans); cursor:pointer; border:1px solid; }
+.act-edit   { color:var(--gold);    border-color:rgba(201,168,76,.3);   background:rgba(201,168,76,.08); }
+.act-edit:hover   { background:var(--gold);   color:#000; }
+.act-hide   { color:var(--text-3);  border-color:var(--border);          background:transparent; }
+.act-hide:hover   { color:var(--danger); border-color:rgba(224,82,82,.4); }
+.act-show   { color:var(--success); border-color:rgba(76,175,125,.3);   background:rgba(76,175,125,.08); }
+.act-show:hover   { background:var(--success); color:#000; }
+.act-invoice { color:#63b3ed; border-color:rgba(99,179,237,.3); background:rgba(99,179,237,.08); }
+.act-invoice:hover { background:#63b3ed; color:#000; }
+.act-detail  { color:var(--text-2); border-color:var(--border); background:transparent; }
+.act-detail:hover { color:var(--gold); border-color:rgba(201,168,76,.3); }
+.act-wa      { color:#25D366; border-color:rgba(37,211,102,.3); background:rgba(37,211,102,.08); }
+.act-wa:hover { background:#25D366; color:#fff; }
+
+/* ── STATUS SELECT ── */
+.status-select { background:var(--bg-elev); border:1px solid var(--border-g); color:var(--text); border-radius:var(--radius); padding:5px 10px; font-size:12px; font-family:inherit; cursor:pointer; outline:none; }
+.status-select:focus { border-color:var(--gold); }
+
+/* ── UPLOAD AREA ── */
+.upload-area { border:2px dashed var(--border-g); border-radius:var(--radius-lg); padding:28px; text-align:center; cursor:pointer; transition:var(--trans); }
+.upload-area:hover { border-color:var(--gold-dk); background:rgba(201,168,76,.04); }
+.upload-area p { font-size:14px; color:var(--text-2); }
+
+/* ── ADMIN MODAL ── */
+.admin-modal { max-width:680px; overflow-y:auto; }
+
+/* ── ORDER DETAIL ── */
+.order-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px; }
+.detail-group { background:var(--bg-elev); border-radius:var(--radius); padding:16px; }
+.detail-label { font-size:11px; letter-spacing:.1em; color:var(--gold); text-transform:uppercase; margin-bottom:8px; }
+.detail-value { font-size:14px; color:var(--text); line-height:1.6; }
+.order-items-table { width:100%; border-collapse:collapse; font-size:13px; }
+.order-items-table th { padding:10px 12px; background:var(--bg-elev); color:var(--text-3); font-size:11px; text-align:left; }
+.order-items-table td { padding:10px 12px; border-top:1px solid var(--border); }
+.order-total-row { display:flex; justify-content:space-between; padding:10px 0; font-size:14px; color:var(--text-2); }
+.order-total-final { font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--gold); font-weight:600; }
+
+/* ── MESSAGES ── */
+.admin-msg { margin-top:16px; font-size:13px; padding:10px 16px; border-radius:var(--radius); display:none; }
+.msg-success { background:rgba(76,175,125,.12); color:#4caf7d; border:1px solid rgba(76,175,125,.3); display:block; }
+.msg-error   { background:rgba(224,82,82,.12);  color:#e05252; border:1px solid rgba(224,82,82,.3);  display:block; }
+
+@media(max-width:900px){
+  .sidebar { width:60px; }
+  .sidebar-logo span,.nav-item span { display:none; }
+  .nav-item { justify-content:center; }
+  .admin-main { margin-left:60px; }
+  .stats-grid { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:600px){
+  .admin-section { padding:20px 16px; }
+  .stats-grid { grid-template-columns:1fr; }
+  .order-detail-grid { grid-template-columns:1fr; }
+}
