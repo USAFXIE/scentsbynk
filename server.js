@@ -3,7 +3,7 @@ const session = require('express-session');
 const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
-const { initDB } = require('./db');
+const supabase = require('./supabase');
 
 const app = express();
 
@@ -34,9 +34,8 @@ app.use('/api/upload', require('./routes/upload'));
 // Fallback 404
 app.use((req, res) => res.status(404).json({ error: 'Not found' }));
 
-// Init DB and start
+// Start server
 const PORT = process.env.PORT || 3000;
-initDB();
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
