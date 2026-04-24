@@ -27,7 +27,18 @@ app.use('/uploads', express.static(uploadsDir));
 
 // API Routes
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/products', require('./routes/products'));
+app.get('/api/products', async (req, res) => {
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+
+  if (error) {
+    console.log("Supabase error:", error)
+    return res.status(500).json({ error: error.message })
+  }
+
+  res.json(data)
+});
 app.use('/api/orders', require('./routes/orders'));
 app.use('/api/upload', require('./routes/upload'));
 
