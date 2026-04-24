@@ -7,46 +7,114 @@ const supabase = require('./supabase');
 
 const app = express();
 
+// ─────────────────────────────
 // Middleware
+// ─────────────────────────────
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'nkscents-secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }
+  cookie: {
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000
+  }
 }));
 
-// Static files
+// ─────────────────────────────
+// Static files (frontend)
+// ─────────────────────────────
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Ensure uploads dir exists
+// ─────────────────────────────
+// Uploads folder
+// ─────────────────────────────
 const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 app.use('/uploads', express.static(uploadsDir));
 
-// API Routes
+// ─────────────────────────────
+// AUTH ROUTES
+// ─────────────────────────────
 app.use('/api/auth', require('./routes/auth'));
+
+// ─────────────────────────────
+// PRODUCTS API (FIXED SAFELY)
+// ─────────────────────────────
 app.get('/api/products', async (req, res) => {
-  const { data, error } = await supabase
-    .from('Products')
-    .select('*')
+  try {
+    const { data, error } = await supabase
+      .from('products') // IMPORTANT: lowercase recommended in Supabase
+      .select('*');
 
-  if (error) {
-    console.log("Supabase error:", error)
-    return res.status(500).json({ error: error.message })
+    if (error) {
+      console.log("Products error:", error);
+      return res.status(500).json({ error: error.message });
+    }
+
+    res.json(data);
+  } catch (err) {
+    console.log("Server error (products):", err);
+    res.status(500).json({ error: err.message });
   }
-
-  res.json(data)
 });
-app.use('/api/orders', require('./routes/orders'));
+
+// ─────────────────────────────
+// ORDERS API (IMPORTANT FIX)
+// ─────────────────────────────
+app.post('/api/orders', async (req, res) => {
+  try {
+    const { items, total, customer } = req.body;
+
+    if (!items || !total) {
+      return res.status(400).json({ error: "Invalid order data" });
+    }
+
+    const { data, error } = await supabase
+      .from('orders')
+      .insert([
+        {
+          items,
+          total,
+          customer: customer || null,
+          created_at: new Date()
+        }
+      ])
+      .select();
+
+    if (error) {
+      console.log("Order insert error:", error);
+      return res.status(500).json({ error: error.message });
+    }
+
+    res.json({ success: true, order: data });
+  } catch (err) {
+    console.log("Order server error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────
+// ROUTE MODULES
+// ─────────────────────────────
 app.use('/api/upload', require('./routes/upload'));
 
-// Fallback 404
-app.use((req, res) => res.status(404).json({ error: 'Not found' }));
+// ─────────────────────────────
+// 404 fallback (IMPORTANT)
+// ─────────────────────────────
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+});
 
-// Start server
+// ─────────────────────────────
+// START SERVER
+// ─────────────────────────────
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
