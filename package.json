@@ -1,4 +1,4 @@
-{
+git status{
   "name": "nk-scents",
   "version": "1.0.0",
   "description": "NK. SCENTS E-Commerce Platform",
@@ -19,5 +19,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
