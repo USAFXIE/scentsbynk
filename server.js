@@ -29,7 +29,7 @@ app.use('/uploads', express.static(uploadsDir));
 app.use('/api/auth', require('./routes/auth'));
 app.get('/api/products', async (req, res) => {
   const { data, error } = await supabase
-    .from('products')
+    .from('Products')
     .select('*')
 
   if (error) {
